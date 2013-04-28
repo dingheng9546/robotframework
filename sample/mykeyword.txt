@@ -1,0 +1,72 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          tudualert.txt
+
+*** Keywords ***
+点击链接
+    [Arguments]    ${clicklink}
+    click link    ${clicklink}
+
+打开浏览器
+    [Arguments]    ${url}
+    close all browsers
+    Open Browser    ${url}    gc
+
+输入用户名
+    [Arguments]    ${username}
+    input text    id=uid    ${username}
+
+输入密码
+    [Arguments]    ${password}
+    input password    id=password    ${password}
+
+点击登录
+    click button    css=button.btn-login
+
+定位框架
+    a    id=mainframe
+
+输入执行人
+    input text    id=to-input-ip    test2
+
+选择版块
+    input text    id=board-input    默认版块
+
+主题
+    input text    id=subject    13211
+
+定位输入框框架
+    a    xpath=//iframe[@class='ke-edit-iframe']
+
+输入内容
+    input text    xpath=//body[@class='ke-content']    111111
+
+返回默认框架
+    check tuduframe
+
+发送
+    click button    xpath=//button[@name='send'][1]
+
+选择模板
+    点击弹出框链接    加载模板
+    wait until keyword succeeds    2min    1s    点击模板名称    testtest
+
+上传网盘附件
+    点击弹出框链接    网盘附件
+    返回默认框架
+    wait until keyword succeeds    2min    1s    展开树状结构
+    wait until keyword succeeds    2min    1s    点击复选框
+    点击确定
+
+点击图度公告会议链接
+    [Arguments]    ${link}
+    click link    ${link}
+
+输入接收人
+    input text    cc-input-ip    test3
+
+地点
+    input text    location    地点地点地点
+
+选择全天
+    click element    allday

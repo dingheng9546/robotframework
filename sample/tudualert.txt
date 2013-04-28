@@ -1,0 +1,21 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+点击弹出框链接
+    [Arguments]    ${link}
+    click link    ${link}
+
+点击模板名称
+    [Arguments]    ${link}
+    click link    ${link}
+
+展开树状结构
+    click element    css=div.tree-node-el > span.tree-ec-icon.tree-elbow-plus
+
+点击复选框
+    click element    name=fileid[]
+
+点击确定
+    click button    css=body.frameset > div.pop_wrap > div.pop.pop_linkman > div.pop_footer > button[name=\"confirm\"]
+

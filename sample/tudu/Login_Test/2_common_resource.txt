@@ -1,0 +1,5 @@
+*** Variables ***
+${server}         aaa.tudu.com
+${browser}        ie
+${username}       test1@aaa
+${password}       123abc!@#

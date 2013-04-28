@@ -1,0 +1,23 @@
+*** Settings ***
+Resource          html_resouce.txt
+
+*** Test Cases ***    接收人           抄送人          密送人      管理员
+send_tudu_success     [Tags]        ccca
+                      [Template]    send_tudu
+                      test2         test3        test4    test5
+
+*** Keywords ***
+send_tudu
+    [Arguments]    ${accepter}    ${cc}    ${pp}    ${manager}
+    given you can login tudu and link create    #登录在首页
+    when \ Blind to ${pp}    #选择执行人
+    and make copy to ${cc}    #写抄送人
+    and accept to ${accepter}    #密送人
+    and input some value    #输入内容
+    and input all \ field
+    and press send tudu    #发送图度
+    then you can see and change your tudu    #发送人可以看见和修改图度
+    ${accepter} can take it    #接收人可以看到和接收
+    ${cc} can see it    #抄送人可以看到
+    ${pp} can see it    #密送人可以看到
+    ${manager} can see and \ change and delete    #版块管理者可以看到和管理图度

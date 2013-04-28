@@ -1,0 +1,16 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          flow.txt
+Resource          mykeywork.txt
+
+*** Variables ***
+${ipaddress}      http://www.baidu.com
+${username}       asdg
+${显示的}            asdfasdf
+
+*** Test Cases ***
+portal
+    [Tags]    ttttt
+    搜索    ${ipaddress}    ${username}    su
+    [Teardown]    Close Browser
+

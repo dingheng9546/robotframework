@@ -1,0 +1,102 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          common_tudu_resource.txt
+
+*** Variables ***
+${WELCOME URL}    https://aaa.tudu.com/frame\#
+
+*** Keywords ***
+you can login tudu and link create
+    Location Should Be    ${WELCOME URL}    #验证是否登录
+    click link    创建图度
+
+input all \ field
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    Execute Javascript    document.getElementById("bid").value="^board"
+    input text    id=subject    6516516    #主题
+
+make copy to ${cc}
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    input text    cc-input-ip    ${cc}
+    mouse down    id=to-input
+
+\ Blind to ${pp}
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    click link    添加密送
+    input text    bcc-input-ip    ${pp}
+
+you can see and change your tudu
+    wait until keyword succeeds    10s    1s    Location Should Contain    aaa.tudu.com/frame\#m=view\&tid=
+    ${bbb}=    log location
+    Set Suite Variable    ${aaa}    ${bbb}
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    Element Should Be Enabled    name=back
+    Element Should Be Enabled    modify
+    Element Should Be Enabled    cancel
+    Element Should Be Enabled    delete
+    Element Should Be Enabled    merge
+    Element Should Be Enabled    foreign
+
+${accepter} can take it
+    Unselect Frame
+    click link    退出
+    ${status}    ${sturte}=    Run Keyword And Ignore Error    Element Should Be Enabled    xpath=//button[text()='放弃']
+    Run Keyword If    '${status}'=='PASS'    click element    xpath=//button[text()='放弃']
+    wait until keyword succeeds    10s    1s    Location Should Be    https://aaa.tudu.com/
+    Execute Javascript    document.getElementById("uid").value=""
+    input text    uid    ${accepter}
+    input text    password    ${password}
+    click button    xpath=//form[@id='loginform']/table/tbody/tr[7]/td/button
+    wait until keyword succeeds    10s    1s    Location Should Be    ${WELCOME URL}
+    go to    ${aaa}
+    Reload Page
+    unselect frame
+    select frame    id=mainframe
+    Element Should Be Enabled    back
+    Element Should Be Enabled    accept
+    Element Should Be Enabled    reject
+    Element Should Be Enabled    forward
+
+${cc} can see it
+    Unselect Frame
+    click link    退出
+    ${status}    ${sturte}=    Run Keyword And Ignore Error    Element Should Be Enabled    xpath=//button[text()='放弃']
+    Run Keyword If    '${status}'=='PASS'    click element    xpath=//button[text()='放弃']
+    wait until keyword succeeds    10s    1s    Location Should Be    https://aaa.tudu.com/
+    Delete All Cookies
+    Execute Javascript    document.getElementById("uid").value=""
+    input text    uid    ${cc}
+    input text    password    ${password}
+    click button    xpath=//form[@id='loginform']/table/tbody/tr[7]/td/button
+    wait until keyword succeeds    10s    1s    Location Should Be    ${WELCOME URL}
+    go to    ${aaa}
+    Reload Page
+    unselect frame
+    select frame    id=mainframe
+    Element Should Be Enabled    back
+    Element Should Be Enabled    ignore
+
+${manager} can see and \ change and delete
+    log    4
+
+input some value
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    select frame    xpath=//iframe[@class='ke-edit-iframe']    #定位到输入框frame
+    Mouse Down    xpath=//body[@class='ke-content']
+    input text    xpath=//body[@class='ke-content']    111111
+
+accept to ${accepter}
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    input text    to-input-ip    ${accepter}
+    Mouse Down    id=cc-input
+
+press send tudu
+    unselect frame
+    select frame    id=mainframe    #定位到内容输入窗口
+    click button    name=send

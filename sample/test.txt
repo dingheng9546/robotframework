@@ -1,0 +1,152 @@
+*** Settings ***
+Library           OperatingSystem
+Library           Telnet
+Library           DatabaseLibrary
+Variables         aaaa.py
+Library           Selenium2Library
+Variables         exctest.py
+Library           testlibs/LoginLibrary.py
+Library           MyLibrary/MyLibrary.py
+Library           HttpLibrary.HTTP
+Library           String
+
+*** Variables ***
+${message}        hello
+@{mylist}         this    is    my    test    const
+@{user}           aaa    bbb
+${result}         aaa
+
+*** Test Cases ***
+test
+    [Documentation]    example case
+    [Tags]    ccc
+    [Setup]
+    log    ${message}
+    mykeyword    \桌面\\Sunlogin
+    log    @{mylist}    1    2    3    4
+
+other test
+    [Tags]    ccc
+    should be equal    ${message}    hello
+
+example
+    [Tags]    ddd
+    create directory    E:\\Python27\\Scripts\\sample\\sample\\tudu\\aaa
+    copy file    \桌面\\keyongrenqun2.jpg    E:\\Python27\\Scripts\\sample\\sample\\tudu\\aaa
+    no operation
+
+example2
+    [Tags]    eee
+    open connection    10.0.0.42    port=23
+
+example3
+    [Tags]
+    [Template]
+    @{items}=    create list    1    2    4    5    6
+    length should be    ${items}    5
+    @{items1}=    create list    @{items}    3
+    length should be    ${items1}    6
+    log    @{items1}[1]
+
+example4
+    [Tags]    333
+    ${status}=    evaluate    0<${result}<5
+    ${down}=    evaluate    int(${result})
+    ${up}=    evaluate    math.ceil(${result})    math
+    ${random}=    evaluate    random.randint(0,sys.maxint)    random,sys
+    ${status1}=    evaluate    ${result}
+
+example5
+    [Tags]    444
+    ${status1}=    catenate    SEPARATOR=    2    ${result}
+    log    ${status1}
+    ${string}=    set variable    abc
+    log    ${string.upper()}
+    log    ${string *2}
+
+excample6
+    [Tags]    666
+    : FOR    ${index}    in random    42    IN
+    \    log    ${index}
+
+example7
+    [Tags]    7777
+    log    ${kw1}
+    log    ${kw2}
+    log    @{kw3}[0]
+    log    ${obj.homepage.tbox.xpath}
+    log    ${a}
+
+example8
+    [Tags]    8888
+    open browser    http://www.baidu.com    ie
+    @{tesss}=    get window titles
+    open browser    http://www.google.com.cn    ff
+    @{b2}=    get window titles
+    log    @{tesss}
+    log    @{b2}[0]
+    select window    @{b2}
+
+example9
+    [Tags]    999
+    open browser    http://www.baidu.com    ie
+    ${aaa}=    Get Element Attribute    kw@name
+    log    ${aaa}
+
+example10
+    [Tags]    1010
+    open browser    http://www.baidu.com    gc
+    Maximize Browser Window
+
+example11
+    [Tags]    1012
+    Run Keyword If    '1'=='1'    open browser    http://www.baidu.com    ie    ELSE    open browser
+    ...    http://www.qq.com    ie
+
+excample12
+    [Tags]    tttttt
+    open browser    http://www.baidu.com    ff
+    Input Text    kw    aaa
+    ${aaa}=    Execute Javascript    return document.getElementById("kw").value
+    log    ${aaa}
+    ${aaa}
+    Input Text
+
+excample13
+    [Tags]    sssss
+    open browser    http://aaa.tudu.com    ie
+    @{aaa}=    Get Window Titles
+    log    @{aaa}[0]
+
+excample
+    [Tags]    ppp
+    Create Http Context    aaa.tudu.com
+    Set Request Body    uid=test4@aaa&password=123456
+    post    /login
+    ${bbb}=    Get Response Header    set-cookie
+    ${a1}=    Split String    ${bbb[1]}    path
+    ${a2}=    Split String    ${bbb[2]}    path
+    ${a3}=    set variable    username
+    ${cookie}    Set Variable    ${a1[0]}${a3}${a2[0]}
+    Set Request Body    type=1
+    Set Request Header    Cookie    ${cookie}
+    post    /app/attend/checkin
+
+excample15
+    [Tags]    cc
+    Create Session    bbb    http://aaa.tudu.com
+    ${resp}=    post    bbb    /login/    data={'uid':'test4@aaa', 'password':123456}
+
+example16
+    [Tags]    log
+    [Setup]    log    1    AND    log    2
+    log    3
+
+*** Keywords ***
+mykeyword
+    [Arguments]    ${path}
+    directory should exist    ${path}
+
+mykeyword2
+    [Arguments]    ${path}    ${opintions}
+    execute command    ls \ ${opintions}${path}

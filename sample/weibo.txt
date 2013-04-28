@@ -1,0 +1,18 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Test Cases ***
+weibo
+    [Tags]    weibo    tttt
+    Set Global Variable    ${alert_empty_user}    用户名不能为空
+    open browser    http://www.weibo.com    ff
+    input text    loginname    304406854@qq.com
+    input text    password    qq520520
+    click link    登录
+    sleep    20s
+    wait until keyword succeeds    2min    1s    input text    css=textarea[title="微博输入框"]    asdasdasdad
+    wait until keyword succeeds    2min    1s    click element    xpath=//a[@title='发布微博按钮']
+    mouse over    xpath=//ul[@class='person']/li[1]
+    sleep    5s
+    click link    退出
+

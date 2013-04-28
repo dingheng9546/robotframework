@@ -1,0 +1,246 @@
+*** Settings ***
+Library           Selenium2Library
+
+*** Keywords ***
+首页
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    more
+    Title Should Be    产品特性
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    css=div.home-centre > div.home-module-item > a.more
+    Title Should Be    合作伙伴
+    click link    首页
+    Title Should Be    向日葵首页
+    Click Link    css=div.home-right > div.home-module-item > a.more
+    Title Should Be    帮助中心
+    click link    首页
+    Title Should Be    向日葵首页
+    click element    css=span.di-plugins.png
+    Title Should Be    向日葵主控端1.0Beta版 - 产品下载
+    click link    首页
+    Title Should Be    向日葵首页
+    click element    css=span.di-controlled.png
+    Title Should Be    向日葵被控端3.5正式版 - 产品下载
+    click link    首页
+    Title Should Be    向日葵首页
+    click element    css=span.di-andriod.png
+    Title Should Be    向日葵主控端 for android 1.0Beta版 - 产品下载
+    click link    首页
+    Title Should Be    向日葵首页
+    click element    css=span.di-ios.png
+    Title Should Be    向日葵首页
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    关于我们
+    Title Should Be    关于我们
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    联系我们
+    Title Should Be    联系我们
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    隐私保护
+    Title Should Be    隐私保护
+    click link    首页
+    Title Should Be    向日葵首页
+    click link    版权声明
+    Title Should Be    版权声明
+    click link    首页
+    Title Should Be    向日葵首页
+
+打开网页
+    close all browsers
+    open browser    https://sunlogin.oray.com/zh_CN/    ff
+    Title Should Be    向日葵首页
+
+产品特性
+    click link    产品特性
+    Title Should Be    产品特性
+
+产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+    click link    立即下载
+    Title Should Be    向日葵被控端3.5正式版 - 产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+    click link    向日葵主控端 for android
+    Title Should Be    向日葵主控端 for android 1.0Beta版 - 产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+    click link    向日葵主控端 for Windows
+    Title Should Be    向日葵主控端1.0Beta版 - 产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+    click link    向日葵主控端远程接入插件合集for IE
+    Title Should Be    向日葵主控端远程接入插件合集for IE 3.5.21.19138 - 产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+    click link    向日葵主控端 for IOS
+    Title Should Be    产品下载
+    click link    产品下载
+    Title Should Be    产品下载
+
+帮助中心
+    click link    帮助中心
+    Title Should Be    帮助中心
+    click link    常见问题
+    element should be visible    link=向日葵被控端登录常见问题    message=可以访问
+    click link    服务体系
+    element should be visible    link=如何共享主机
+    click link    服务应用
+    element should be visible    link=向日葵的特色
+
+合作伙伴
+    click link    合作伙伴
+    Title Should Be    合作伙伴
+
+登陆
+    [Arguments]    ${username}    ${password}
+    input text    account    ${username}
+    input password    password    ${password}
+    click button    css=button.btn
+    run keyword if    '${username}'=='${empty}' or '${password}'=='${empty}'    element should be visible    msg-info
+    [Teardown]
+
+点击登录
+    click link    登录
+
+添加主机
+    [Arguments]    ${name}    ${description}
+    click button    add-host
+    input text    name    ${name}
+    input text    description    ${description}
+    wait until keyword succeeds    2min    1s    click button    css=button.btn-big
+    wait until keyword succeeds    2min    1s    page should contain element    pop-add-host-success
+    wait until keyword succeeds    2min    1s    click element    css=#pop-add-host-success > div.pop-header > a.icon.icon-close
+
+选择所有主机
+    click element    checkall
+
+无主机添加主机
+    [Arguments]    ${name}    ${description}
+    click button    add-now
+    input text    name    ${name}
+    input text    description    ${description}
+    wait until keyword succeeds    2min    1s    click button    xpath=//button[@type='submit']
+    wait until keyword succeeds    2min    1s    page should contain element    pop-add-host-success
+    wait until keyword succeeds    2min    1s    click element    css=#pop-add-host-success > div.pop-header > a.icon.icon-close
+
+添加共享主机
+    click button    add-share
+    input text    account[]    dingheng999
+    click button    share-but-confirm
+
+点击刷新
+    wait until keyword succeeds    2min    1s    click link    refresh
+
+点击删除
+    click link    删除
+    confirm action
+    choose ok on next confirmation
+
+新建标签
+    click link    mark
+    wait until keyword succeeds    2min    1s    click element    xpath=//body/div/div[@class='option-menu-wrap']/div/div[@class='menu-item'][last()]
+    wait until keyword succeeds    2min    1s    input text    name    我是标签
+    click button    css=#tagform > button.btn-big-gray
+    wait until keyword succeeds    2min    1s    click link    edit
+    input text    xpath=(//input[@name='name'])[2]    我是标签2
+    click button    css=button.btn-big
+    sleep    5s
+    click link    主机列表
+
+添加主机标签
+    选择所有主机
+    click link    mark
+    click element    css=div[name="我是标签2"]
+
+主机属性列表
+    wait until keyword succeeds    2min    1s    click element    xpath=//body/div[2]/div/div/table/tbody/tr/td[2]/a/span[@class='host-name']
+    Title Should Be    概述
+    click link    远程控制
+    Title Should Be    远程控制
+    click link    view-network
+    Title Should Be    VPN网络
+    click link    葵码及安装包
+    Title Should Be    葵码及安装包
+    sleep    5s
+    click link    主机属性
+    Title Should Be    主机属性
+    主机属性添加
+    click link    主机日志
+    Title Should Be    主机日志
+    click link    共享主机
+    Title Should Be    共享主机
+    主机属性页面取消添加共享主机
+    click link    主机列表
+
+主机属性添加
+    wait until keyword succeeds    2min    1s    input text    contact    我是姓名
+    input text    contacttel    13333333333
+    input text    contactemail    6546546@oray.com
+    click button    css=button.btn-big
+    wait until keyword succeeds    2min    1s    page should contain element    msg-info
+    sleep    5s
+
+主机属性页面取消添加共享主机
+    wait until keyword succeeds    2min    1s    click button    cancel
+    sleep    5s
+    input text    account    dingheng999
+    sleep    5s
+    click button    share
+    sleep    5s
+
+新建VPN网络
+    click link    VPN网络
+    click button    add-network
+    input text    xpath=(//input[@name='name'])[2]    我是VPN网络
+    input text    xpath=(//input[@name='description'])[2]    我是描述
+    click button    css=button.btn-big
+    click element    css=li
+    click button    xpath=(//button[@type='submit'])[2]
+    click button    xpath=(//button[@type='submit'])[3]
+    sleep    5s
+
+修改VPN网络
+    click element    xpath=//tbody/tr/td[2]/a/span[@class='network-name']
+    wait until keyword succeeds    2min    1s    click link    网络成员
+    Title Should Be    网络成员
+    sleep    6s
+    click link    网络属性
+    Title Should Be    网络属性
+    wait until keyword succeeds    2min    1s    input text    name    我是VPN网络2
+    wait until keyword succeeds    2min    1s    input text    memo    我是描述2
+    click button    css=button.btn-big
+    sleep    5s
+
+全局设置
+    click link    全局设置
+    Title Should Be    桌面设置
+    wait until keyword succeeds    2min    1s    click element    xpath=/html/body/div[2]/div/div/div/div/a
+    wait until keyword succeeds    2min    1s    input text    name    我是新桌面模式
+    click button    css=button.btn-big
+    wait until keyword succeeds    2min    1s    click element    xpath=/html/body/div[2]/div/div[2]/table[2]/tbody/tr/td[3]/a[2]
+    sleep    5s
+    confirm action
+    choose ok on next confirmation
+
+清空数据
+    click link    全局设置
+    wait until keyword succeeds    2min    1s    click element    xpath=/html/body/div/div[3]/div/div/button[2]
+    sleep    5s
+    click link    del
+    sleep    5s
+    confirm action
+    choose ok on next confirmation
+    wait until keyword succeeds    2min    1s    click link    VPN网络
+    wait until keyword succeeds    2min    1s    click element    checkall
+    点击删除
+    sleep    5s
+    click link    主机列表
+    wait until keyword succeeds    2min    1s    click element    checkall
+    点击删除
+

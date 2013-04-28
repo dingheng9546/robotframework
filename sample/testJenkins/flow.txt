@@ -1,0 +1,19 @@
+*** Settings ***
+Library           Selenium2Library
+Resource          mykeywork.txt
+
+*** Keywords ***
+搜索
+    [Arguments]    ${ipaddress}    ${username}    ${btnSubmit}
+    打开浏览器
+    到哪里去    ${ipaddress}
+
+${EMPTY}
+    sleep    2s
+    Wait Until Keyword Succeeds    40s    2s    Input name    ${username}
+    sm    ${btnSubmit}
+    Sleep    3s
+    ${aaa}=    Execute Javascript    return document.getElementById("kw").count
+    Wait Until Keyword Succeeds    40s    3s    yz    ${username}
+    log    ${aaa}
+

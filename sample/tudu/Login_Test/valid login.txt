@@ -1,0 +1,16 @@
+*** Settings ***
+Resource          html_resource.txt
+Resource          2_common_resource.txt
+
+*** Test Cases ***    用户名           密码
+validlogin            [Tags]        ccca
+                      [Template]    login
+                      test1@aaa     123abc!@#
+
+*** Keywords ***
+login
+    [Arguments]    ${username}    ${password}
+    Given browser is closed    # 浏览器关闭
+    When someone input ${server} on ${browser}    # 在浏览器里面输入网址
+    and the ${username} and ${password} is ture    # 输入正确的用户名和密码
+    Then you can login tudu    # 成功的登陆到图度页面

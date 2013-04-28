@@ -1,0 +1,42 @@
+*** Settings ***
+Library           MyLibrary
+Library           Selenium2Library
+Resource          logintudu.txt
+Library           String
+
+*** Variables ***
+@{list}           图度    公告    会议    讨论
+${link}           ${EMPTY}
+${url}            http://caijiao5.tudu.com
+${username}       test1@caijiao5
+${password}       111111
+
+*** Test Cases ***    clicklink     link
+创建并发送图度               [Tags]        aaa1
+                      [Template]    登陆并创建图度
+                      创建图度          图度
+                      [Teardown]    close all browsers
+
+创建并发送讨论               [Tags]        aaa
+                      [Template]    登陆并创建图度
+                      创建图度          讨论
+                      [Teardown]    close all browsers
+
+创建并发送公告               [Tags]        aaa
+                      [Template]    登陆并创建图度
+                      创建图度          公告
+                      [Teardown]    close all browsers
+
+创建并发送会议               [Tags]        aaa
+                      [Template]    登陆并创建图度
+                      创建图度          会议
+                      [Teardown]    close all browsers
+
+*** Keywords ***
+登陆并创建图度
+    [Arguments]    ${clicklink}    ${link}
+    [Documentation]    run keyword if '${link}'<>'' 创建${link} ${link}
+    登陆图度    ${url}    ${username}    ${password}
+    点击链接    ${clicklink}
+    run keyword if    '${link}'<>''    创建${link}    ${link}
+    sleep    10s

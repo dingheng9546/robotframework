@@ -1,0 +1,24 @@
+*** Settings ***
+Library           Selenium2Library
+Variables         aaaa.py
+
+*** Keywords ***
+打开浏览器
+    Open Browser    http://www.baidu.com    ff
+
+到哪里去
+    [Arguments]    ${gotoIPaddress}
+    Go To    ${gotoIPaddress}
+
+sm
+    [Arguments]    ${btnSubmit}
+    Click Element    xpath=${obj.homepage.btn.xpath}
+
+Input name
+    [Arguments]    ${username}
+    Input Text    xpath=${obj.homepage.tbox.xpath}    ${username}
+
+yz
+    [Arguments]    ${usernametext}
+    Page Should Contain    ${usernametext}
+

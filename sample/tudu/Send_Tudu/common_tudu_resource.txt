@@ -1,0 +1,2 @@
+*** Variables ***
+${password}       123456

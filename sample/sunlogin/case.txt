@@ -1,0 +1,54 @@
+*** Settings ***
+Resource          keyword.txt
+
+*** Test Cases ***
+firstpage
+    [Tags]    sunlogin
+    打开网页
+    首页
+    产品特性
+    产品下载
+    帮助中心
+    合作伙伴
+    [Teardown]
+
+open broser
+    [Tags]    sunlogin    login
+    打开网页
+    点击登录
+
+logintest
+    [Tags]    sunlogin    login
+    [Template]    登陆
+    ${EMPTY}    ${EMPTY}
+    dingheng9546    ${EMPTY}
+    dingheng9546    qq520520
+    dingheng9546    qq520520
+    dingheng9546    qq520520
+    dingheng9546    qq520520/
+
+login
+    [Tags]    sunlogin    list
+    打开网页
+    点击登录
+    登陆    dingheng888    qq520520/
+
+hostlist
+    [Tags]    sunlogin    list
+    无主机添加主机    我是主机名    我是主机描述
+    选择所有主机
+    添加共享主机
+    点击刷新
+    选择所有主机
+    新建标签
+    添加主机标签
+    主机属性列表
+    新建VPN网络
+    修改VPN网络
+    全局设置
+    清空数据
+
+list
+    [Tags]    list    sunlogin
+    清空数据
+

@@ -1,0 +1,23 @@
+*** Settings ***
+Resource          2_common_resource.txt
+Library           Selenium2Library
+
+*** Variables ***
+${WELCOME URL}    https://aaa.tudu.com/frame\#
+
+*** Keywords ***
+browser is closed
+    Close All Browsers
+
+someone input ${url} on ${browser}
+    open browser    ${server}    ${browser}
+    Maximize Browser Window
+
+the ${username} and ${password} is ture
+    input text    uid    ${username}
+    input text    password    ${password}
+    click button    xpath=//form[@id='loginform']/table/tbody/tr[7]/td/button
+
+you can login tudu
+    sleep    2
+    wait until keyword succeeds    10s    1s    Location Should Be    ${WELCOME URL}
