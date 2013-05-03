@@ -1,9 +1,9 @@
-*** Settings ***
+﻿*** Settings ***
 Library           Selenium2Library
 Resource          common_tudu_resource.txt
 
 *** Variables ***
-${WELCOME URL}    https://aaa.tudu.com/frame\#
+${WELCOME URL}    http://aaa.tudu.com/frame\#
 
 *** Keywords ***
 you can login tudu and link create
