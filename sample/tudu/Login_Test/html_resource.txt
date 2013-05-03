@@ -3,7 +3,7 @@ Resource          2_common_resource.txt
 Library           Selenium2Library
 
 *** Variables ***
-${WELCOME URL}    https://aaa.tudu.com/frame\#
+${WELCOME URL}    http://aaa.tudu.com/frame\#
 
 *** Keywords ***
 browser is closed
